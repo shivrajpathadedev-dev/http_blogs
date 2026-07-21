@@ -2,7 +2,7 @@
 
 export interface IPost{
   post: any;
-  id: number;
+  id: string;
   title: string;
   author: string;
   content:string;
