@@ -22,13 +22,13 @@ export class PostService {
       )
   }
 
-  addPost(postData: IPost  ): Observable<any> {
+  addPost(postData: IPost): Observable<any> {
     return this._http.post<any>(this.POST_URL, postData);
   }
 
-  updatePost(postData: IPost):Observable<IPost> {
+  updatePost(postData: IPost):Observable<any> {
     let UpdatePostUrl=`${this.POST_URL}/${postData.id}`;
-    return this._http.patch<IPost>(UpdatePostUrl, postData);
+    return this._http.patch<any>(UpdatePostUrl, postData);
   }
 
   removePost(postId: string): Observable<any> {

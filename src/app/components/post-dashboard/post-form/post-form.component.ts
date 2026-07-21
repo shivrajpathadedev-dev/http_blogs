@@ -20,13 +20,16 @@ export class PostFormComponent implements OnInit {
   post!: IPost;
   constructor(
     private _matdilogRef: MatDialogRef<PostFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IPost,
+   @Inject(MAT_DIALOG_DATA) public data: { post: IPost },
     private _postservice: PostService,
     private _snackbar: SnackbarService
   ) { }
 
 ngOnInit(): void {
   this.createPost();
+  console.log('Dialog Data:', this.data);
+console.log('Post:', this.data?.post);
+console.log('Post ID:', this.data?.post?.id);
     console.log(this.data); 
      if (this.data?.post) {
     this.isInEditmode = true;
@@ -58,12 +61,13 @@ ngOnInit(): void {
       this._postservice.addPost(postData)
         .subscribe({
           next: data => {
+            console.log(data);
+            
             this.postform.reset();
             this._matdilogRef.close({
-              ...postData,
-              id: data.name
+              ...postData
             });
-            this._snackbar.openSnackBar('Post Added Successfully', 'Close');
+            this._snackbar.openSnackBar(data.message, 'Close');
           },
           error: err => {
             console.log(err);
@@ -78,8 +82,7 @@ ngOnInit(): void {
       return;
     } else {
       let postData: IPost = this.postform.value;
-      this._postservice
-        .updatePost({
+      this._postservice.updatePost({
           ...postData,
           id: this.post.id
         })
@@ -92,7 +95,7 @@ ngOnInit(): void {
               ...postData,
               id: this.post.id
             });
-            this._snackbar.openSnackBar('Post Updated Successfully', 'Close');
+            this._snackbar.openSnackBar(data.message, 'Close');
           },
           error: err => {
             console.log(err);

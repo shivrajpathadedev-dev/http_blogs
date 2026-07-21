@@ -37,10 +37,10 @@ export class PostCardComponent implements OnInit {
 
   onRemovePost() {
     this._postService
-      .removePost(this.post.id.toString())
+      .removePost(this.post.id)
       .subscribe({
         next: data => {
-          this.postRemoved.emit(this.post.id.toString());
+          this.postRemoved.emit(this.post.id);
           this._snackbar.openSnackBar('Post deleted successfully', 'Close');
         },
         error: err => {
