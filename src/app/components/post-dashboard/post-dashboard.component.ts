@@ -19,20 +19,22 @@ posts: IPost[]=[]
   ngOnInit(): void {
     this.getPosts()
     this.updateposts();
-
-    this._postservice.UpdateSub$.subscribe(res => {
-      if(res){
-        this.getPosts()
-      }
-    })
   }
 
   updateposts(){
     this._postservice.UpdateSub$.subscribe({
       next:data=>{
-        if(data){
-          this.getPosts()
-        }
+        this._postservice.isineditmode$.subscribe(res => {
+          if(res){
+            let index = this.posts.findIndex(ele => ele.id === data.id);
+            this.posts[index] = data;
+            return;
+          }else{
+            this.posts.unshift(data)
+          }
+        })
+
+        
       }
     })
   }
@@ -61,7 +63,7 @@ openPostForm() {
   matDilaogRef.afterClosed().subscribe({
     next: data => {
       if (data) {
-        this.posts.unshift(data);
+        console.log(data)
       } 
     },
     error: err => {

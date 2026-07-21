@@ -11,7 +11,8 @@ import { IPost } from '../models/post';
 export class PostService {
   BASE_URL = environment.base_url
   POST_URL = `${this.BASE_URL}`
-  UpdateSub$ : Subject<boolean> = new Subject<boolean>();
+  UpdateSub$ : Subject<IPost> = new Subject<IPost>();
+  isineditmode$ : Subject<boolean> = new Subject<boolean>()
   constructor(
     private _http: HttpClient
   ) { }

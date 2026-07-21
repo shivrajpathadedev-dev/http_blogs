@@ -9,8 +9,13 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <app-post-card *ngFor="let post of posts" [post]="post" (postRemoved)="onPostRemoved($event)">
-            </app-post-card>
+            <ng-container *ngIf="posts.length > 0; else nopost">
+                <app-post-card *ngFor="let post of posts" [post]="post" (postRemoved)="onPostRemoved($event)">
+                </app-post-card>
+            </ng-container>
+            <ng-template #nopost>
+                <p class="alert alert-info">No post is added Yet.. Plz add Post..</p>
+            </ng-template>
         </div>
     </div>
 </div>

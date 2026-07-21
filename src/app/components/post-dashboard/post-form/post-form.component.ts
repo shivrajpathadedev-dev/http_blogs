@@ -62,7 +62,8 @@ ngOnInit(): void {
             this._matdilogRef.close({
               ...postData
             });
-            this._postservice.UpdateSub$.next(true)
+            this._postservice.UpdateSub$.next(data.data)
+            this._postservice.isineditmode$.next(false)
             this._snackbar.openSnackBar(data.message, 'Close');
           },
           error: err => {
@@ -85,7 +86,8 @@ ngOnInit(): void {
           next: data => {
             console.log(data);
             this.postform.reset();
-            this._postservice.UpdateSub$.next(true);
+            this._postservice.UpdateSub$.next(data.data);
+            this._postservice.isineditmode$.next(true)
             this._matdilogRef.close({
               ...postData,
               id: this.post.id
