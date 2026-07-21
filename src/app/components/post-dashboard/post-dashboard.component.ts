@@ -19,6 +19,12 @@ posts: IPost[]=[]
   ngOnInit(): void {
     this.getPosts()
     this.updateposts();
+
+    this._postservice.UpdateSub$.subscribe(res => {
+      if(res){
+        this.getPosts()
+      }
+    })
   }
 
   updateposts(){

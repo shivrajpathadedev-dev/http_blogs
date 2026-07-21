@@ -24,14 +24,9 @@ export class PostCardComponent implements OnInit {
 
   onEditPost() {
     let matConfig = new MatDialogConfig();
-
     matConfig.width = '450px';
     matConfig.disableClose = true;
-
-    matConfig.data = {
-      post: this.post
-    };
-
+    matConfig.data =  this.post
     this._matDialog.open(PostFormComponent, matConfig);
   }
 

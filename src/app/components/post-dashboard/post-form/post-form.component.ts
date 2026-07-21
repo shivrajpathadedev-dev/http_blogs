@@ -20,25 +20,22 @@ export class PostFormComponent implements OnInit {
   post!: IPost;
   constructor(
     private _matdilogRef: MatDialogRef<PostFormComponent>,
-   @Inject(MAT_DIALOG_DATA) public data: { post: IPost },
+   @Inject(MAT_DIALOG_DATA) public data: IPost,
     private _postservice: PostService,
     private _snackbar: SnackbarService
   ) { }
 
 ngOnInit(): void {
   this.createPost();
-  console.log('Dialog Data:', this.data);
-console.log('Post:', this.data?.post);
-console.log('Post ID:', this.data?.post?.id);
-    console.log(this.data); 
-     if (this.data?.post) {
+
+  if (this.data) {
     this.isInEditmode = true;
-    this.post = this.data.post;
+    this.post = this.data;
 
     this.postform.patchValue({
-      title: this.data.post.title,
-      author: this.data.post.author,
-      content: this.data.post.content
+      title: this.data.title,
+      author: this.data.author,
+      content: this.data.content
     });
   }
 }
@@ -61,12 +58,11 @@ console.log('Post ID:', this.data?.post?.id);
       this._postservice.addPost(postData)
         .subscribe({
           next: data => {
-            console.log(data);
-            
             this.postform.reset();
             this._matdilogRef.close({
               ...postData
             });
+            this._postservice.UpdateSub$.next(true)
             this._snackbar.openSnackBar(data.message, 'Close');
           },
           error: err => {
@@ -79,7 +75,6 @@ console.log('Post ID:', this.data?.post?.id);
   onUpdatePost() {
     if (this.postform.invalid) {
       this.postform.markAllAsTouched();
-      return;
     } else {
       let postData: IPost = this.postform.value;
       this._postservice.updatePost({
