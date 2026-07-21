@@ -7,6 +7,7 @@ import { IPost } from '../models/post';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
   BASE_URL = environment.base_url
   POST_URL = `${this.BASE_URL}`
