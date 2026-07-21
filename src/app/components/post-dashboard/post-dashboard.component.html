@@ -1,0 +1,16 @@
+<div class="container post-dashboard">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center align-items-center mb-4 mt-4">
+                <h1 class="mb-0 mr-4 font-weight-bold">
+                    Post Dashboard
+                </h1>
+                <button (click)="openPostForm()" mat-mini-fab color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <app-post-card *ngFor="let post of posts" [post]="post" (postRemoved)="onPostRemoved($event)">
+            </app-post-card>
+        </div>
+    </div>
+</div>

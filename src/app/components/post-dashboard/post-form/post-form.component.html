@@ -1,0 +1,43 @@
+<h2>
+    <strong>
+        {{ isInEditmode ? 'Update Post' : 'Add New Post' }}
+    </strong>
+</h2>
+
+<form [formGroup]="postform" (ngSubmit)="isInEditmode ? onUpdatePost() : onPostSubmit()">
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter title">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Author</mat-label>
+        <input matInput formControlName="author" placeholder="Enter author name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="content" placeholder="Enter content" rows="4">
+        </textarea>
+    </mat-form-field>
+
+    <div class="button-container d-flex justify-content-between">
+
+        <!-- Add button only in Add mode -->
+        <button *ngIf="!isInEditmode" mat-raised-button color="primary" type="submit">
+            Add Post
+        </button>
+
+        <!-- Update button only in Edit mode -->
+        <button *ngIf="isInEditmode" mat-raised-button color="primary" type="submit">
+            Update Post
+        </button>
+
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">
+            Cancel
+        </button>
+
+    </div>
+
+</form>
