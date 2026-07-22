@@ -2,8 +2,8 @@
 
 export interface IPost{
   post?: any;
-  id: string;
+  userId: string;
   title: string;
   author: string;
-  content:string;
+  body:string;
 }

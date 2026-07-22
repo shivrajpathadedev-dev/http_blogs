@@ -9,7 +9,7 @@ import { SpinnerService } from './spinner.service';
   providedIn: 'root'
 })
 export class PostService {
-  BASE_URL = environment.base_url;
+  BASE_URL:string = environment.base_url;
   POST_URL = `${this.BASE_URL}`;
   UpdateSub$: Subject<IPost> = new Subject<IPost>();
   isineditmode$: Subject<boolean> = new Subject<boolean>();
@@ -48,7 +48,7 @@ export class PostService {
 
     this._spinner.emitLoadingFlag(true);
 
-    let updatePostUrl = `${this.POST_URL}/${postData.id}`;
+    let updatePostUrl = `${this.POST_URL}/${postData.userId}`;
 
     return this._http.patch<any>(updatePostUrl, postData).pipe(
       finalize(() => {

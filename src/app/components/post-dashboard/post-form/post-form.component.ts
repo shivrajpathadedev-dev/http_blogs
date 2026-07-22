@@ -37,7 +37,7 @@ ngOnInit(): void {
     this.postform.patchValue({
       title: this.data.title,
       author: this.data.author,
-      content: this.data.content
+      body: this.data.body
     });
   }
 }
@@ -46,7 +46,7 @@ ngOnInit(): void {
     this.postform = new FormGroup({
       title: new FormControl(null, [Validators.required]),
       author: new FormControl(null, [Validators.required]),
-      content: new FormControl(null, [Validators.required])
+      body: new FormControl(null, [Validators.required])
     });
   }
 
@@ -83,7 +83,7 @@ ngOnInit(): void {
       let postData: IPost = this.postform.value;
       this._postservice.updatePost({
           ...postData,
-          id: this.post.id
+          userId: this.post.userId
         })
         .subscribe({
           next: data => {
@@ -94,7 +94,7 @@ ngOnInit(): void {
             this._postservice.isineditmode$.next(true)
             this._matdilogRef.close({
               ...postData,
-              id: this.post.id
+              userId: this.post.userId
             });
             this._snackbar.openSnackBar(data.message, 'Close');
           },

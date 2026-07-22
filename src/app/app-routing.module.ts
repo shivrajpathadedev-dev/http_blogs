@@ -17,8 +17,8 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'posts',
-    title: 'Posts',
+    path: 'blogs',
+    title: 'Blogs',
     component: PostDashboardComponent
   },
   {

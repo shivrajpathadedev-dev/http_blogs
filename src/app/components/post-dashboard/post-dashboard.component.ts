@@ -28,7 +28,7 @@ posts: IPost[]=[]
       next:data=>{
         this._postservice.isineditmode$.subscribe(res => {
           if(res){
-            let index = this.posts.findIndex(ele => ele.id === data.id);
+            let index = this.posts.findIndex(ele => ele.userId === data.userId);
             this.posts[index] = data;
               this._spinner.emitLoadingFlag(false)
             return;
@@ -78,7 +78,7 @@ openPostForm() {
 
 onPostRemoved(id: string) {
   this.posts = this.posts.filter(
-    post => post.id.toString() !== id
+    post => post.userId.toString() !== id
   );
 }
 

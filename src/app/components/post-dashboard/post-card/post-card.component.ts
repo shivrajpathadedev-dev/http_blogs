@@ -40,10 +40,10 @@ export class PostCardComponent implements OnInit {
     matDialog.afterClosed()
       .subscribe(res => {
         if (res) {
-          this._postService.removePost(this.post.id)
+          this._postService.removePost(this.post.userId)
             .subscribe({
               next: data => {
-                this.postRemoved.emit(this.post.id);
+                this.postRemoved.emit(this.post.userId);
                 this._snackbar.openSnackBar('Post deleted successfully', 'Close');
               },
               error: err => {
