@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IPost } from 'src/app/models/post';
 import { PostService } from 'src/app/service/post.service';
 import { PostFormComponent } from './post-form/post-form.component';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-post-dashboard',
@@ -13,7 +14,8 @@ export class PostDashboardComponent implements OnInit {
 posts: IPost[]=[]
   constructor(
     private _postservice:PostService,
-    private _matDialog:MatDialog
+    private _matDialog:MatDialog,
+    private _spinner:SpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -28,9 +30,11 @@ posts: IPost[]=[]
           if(res){
             let index = this.posts.findIndex(ele => ele.id === data.id);
             this.posts[index] = data;
+              this._spinner.emitLoadingFlag(false)
             return;
           }else{
             this.posts.unshift(data)
+              this._spinner.emitLoadingFlag(false)
           }
         })
 

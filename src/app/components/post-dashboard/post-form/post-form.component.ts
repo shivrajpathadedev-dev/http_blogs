@@ -8,6 +8,7 @@ import {
 import { IPost } from 'src/app/models/post';
 import { PostService } from 'src/app/service/post.service';
 import { SnackbarService } from 'src/app/service/snackbar.service';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-post-form',
@@ -22,7 +23,8 @@ export class PostFormComponent implements OnInit {
     private _matdilogRef: MatDialogRef<PostFormComponent>,
    @Inject(MAT_DIALOG_DATA) public data: IPost,
     private _postservice: PostService,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private _spinner:SpinnerService
   ) { }
 
 ngOnInit(): void {
@@ -68,6 +70,7 @@ ngOnInit(): void {
           },
           error: err => {
             console.log(err);
+              this._spinner.emitLoadingFlag(false)
           }
         });
     }
@@ -87,6 +90,7 @@ ngOnInit(): void {
             console.log(data);
             this.postform.reset();
             this._postservice.UpdateSub$.next(data.data);
+              this._spinner.emitLoadingFlag(false)
             this._postservice.isineditmode$.next(true)
             this._matdilogRef.close({
               ...postData,

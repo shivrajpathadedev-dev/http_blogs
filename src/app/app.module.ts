@@ -12,6 +12,7 @@ import { PostCardComponent } from './components/post-dashboard/post-card/post-ca
 import { PostFormComponent } from './components/post-dashboard/post-form/post-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GetConfirmComponent } from './components/get-confirm/get-confirm.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContactComponent,
     AboutComponent,
     PostCardComponent,
-    PostFormComponent
+    PostFormComponent,
+    GetConfirmComponent
   ],
   imports: [
     BrowserModule,
