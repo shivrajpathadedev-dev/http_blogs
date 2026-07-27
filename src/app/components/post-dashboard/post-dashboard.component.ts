@@ -23,25 +23,34 @@ posts: IPost[]=[]
     this.updateposts();
   }
 
-  updateposts(){
-    this._postservice.UpdateSub$.subscribe({
-      next:data=>{
-        this._postservice.isineditmode$.subscribe(res => {
-          if(res){
-            let index = this.posts.findIndex(ele => ele.userId === data.userId);
-            this.posts[index] = data;
-              this._spinner.emitLoadingFlag(false)
-            return;
-          }else{
-            this.posts.unshift(data)
-              this._spinner.emitLoadingFlag(false)
-          }
-        })
+  updateposts() {
+  this._postservice.UpdateSub$.subscribe({
+    next: data => {
 
-        
-      }
-    })
-  }
+      this._postservice.isineditmode$.subscribe(res => {
+
+        if (res) {
+
+          let index = this.posts.findIndex(
+            ele => ele._id === data._id
+          );
+
+          if (index !== -1) {
+            this.posts[index] = data;
+          }
+
+          this._spinner.emitLoadingFlag(false);
+          return;
+
+        } else {
+
+          this.posts.unshift(data);
+          this._spinner.emitLoadingFlag(false);
+        }
+      });
+    }
+  });
+}
 
   getPosts(){
     this._postservice.fetchBlog().subscribe({
@@ -78,7 +87,7 @@ openPostForm() {
 
 onPostRemoved(id: string) {
   this.posts = this.posts.filter(
-    post => post.userId.toString() !== id
+    post => post._id !== id
   );
 }
 

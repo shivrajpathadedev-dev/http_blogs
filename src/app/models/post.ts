@@ -1,9 +1,9 @@
-
-
-export interface IPost{
+export interface IPost {
   post?: any;
-  userId: string;
+  _id: string;
   title: string;
   author: string;
-  body:string;
+  body: string;
+  createdAt?: Date;
+  updatedAt?: Date | null;
 }

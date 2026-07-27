@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  base_url:`https://blog-backend-bbg2.onrender.com/blogs`
+    base_url: 'http://localhost:4000/blogs'
 };
 
 /*

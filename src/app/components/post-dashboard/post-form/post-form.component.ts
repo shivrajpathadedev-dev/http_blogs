@@ -50,60 +50,79 @@ ngOnInit(): void {
     });
   }
 
+onPostSubmit() {
 
-  onPostSubmit() {
-    if (this.postform.invalid) {
-      this.postform.markAllAsTouched();
-      return;
-    } else {
-      let postData = this.postform.value;
-      this._postservice.addPost(postData)
-        .subscribe({
-          next: data => {
-            this.postform.reset();
-            this._matdilogRef.close({
-              ...postData
-            });
-            this._postservice.UpdateSub$.next(data.data)
-            this._postservice.isineditmode$.next(false)
-            this._snackbar.openSnackBar(data.message, 'Close');
-          },
-          error: err => {
-            console.log(err);
-              this._spinner.emitLoadingFlag(false)
-          }
-        });
-    }
+  if (this.postform.invalid) {
+    this.postform.markAllAsTouched();
+    return;
   }
 
-  onUpdatePost() {
-    if (this.postform.invalid) {
-      this.postform.markAllAsTouched();
-    } else {
-      let postData: IPost = this.postform.value;
-      this._postservice.updatePost({
-          ...postData,
-          userId: this.post.userId
-        })
-        .subscribe({
-          next: data => {
-            console.log(data);
-            this.postform.reset();
-            this._postservice.UpdateSub$.next(data.data);
-              this._spinner.emitLoadingFlag(false)
-            this._postservice.isineditmode$.next(true)
-            this._matdilogRef.close({
-              ...postData,
-              userId: this.post.userId
-            });
-            this._snackbar.openSnackBar(data.message, 'Close');
-          },
-          error: err => {
-            console.log(err);
-          }
-        });
-    }
+  let postData: IPost = this.postform.value;
+
+  this._postservice.addPost(postData)
+    .subscribe({
+      next: data => {
+
+        this.postform.reset();
+
+        // MongoDB response मध्ये _id आहे
+        this._postservice.UpdateSub$.next(data.data);
+
+        this._postservice.isineditmode$.next(false);
+
+        this._matdilogRef.close(data.data);
+
+        this._snackbar.openSnackBar(
+          data.message,
+          'Close'
+        );
+      },
+
+      error: err => {
+        console.log(err);
+      }
+    });
+}
+
+onUpdatePost() {
+
+  if (this.postform.invalid) {
+    this.postform.markAllAsTouched();
+    return;
   }
+
+  let postData: IPost = this.postform.value;
+
+  this._postservice.updatePost({
+    ...postData,
+    _id: this.post._id
+  })
+  .subscribe({
+    next: data => {
+
+      console.log(data);
+
+      this.postform.reset();
+
+      // MongoDB updated data dashboard ला send
+      this._postservice.UpdateSub$.next(data.data);
+
+      this._postservice.isineditmode$.next(true);
+
+      // Dialog close
+      this._matdilogRef.close(data.data);
+
+      this._snackbar.openSnackBar(
+        data.message,
+        'Close'
+      );
+    },
+
+    error: err => {
+      console.log(err);
+    }
+  });
+}
 
   onCancel() {
     this._matdilogRef.close(false);

@@ -1,5 +1,5 @@
 
 export const environment = {
   production: true,
-  base_url:`https://blog-backend-bbg2.onrender.com/blogs`
+  base_url: 'http://localhost:4000/blogs'
 };
